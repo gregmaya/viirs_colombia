@@ -7,8 +7,12 @@ import pandas as pd
 df = pd.read_csv("../data/municipios_sel.csv")
 print(f"Loaded : {len(df)} municipios seleccionados")
 
+# load respective shapefile into geodataframe
 gdf = gpd.read_file("../data/mpio_politico2023_dane/MGN_ADM_MPIO_GRAFICO.shp")
 print(f"Loaded : {len(gdf)} municipios en Colombia. CRS : {gdf.crs}")
+
+gdf = gpd.read_file("../data/mpio_politico2023_dane/MGN_URB_ZONA_URBANA.shp")
+print(f"Loaded : {len(gdf)} zonas urbanas en Colombia. CRS : {gdf.crs}")
 gdf.plot()
 # %%
 # convert 'mpio_cdpmp' to int in gdf
@@ -23,6 +27,6 @@ gdf.plot(column="selected_mun", legend=True)
 
 # %%
 # export shapefile in crs 4326 for Google Earth engine
-filepath = "../data/mpios_selected/col_mpios_selected.shp"
+filepath = "../data/mpios_selected/col_zon_urb_selected.shp"
 gdf.to_crs(epsg=4326).to_file(filepath, driver="ESRI Shapefile")
 # %%
