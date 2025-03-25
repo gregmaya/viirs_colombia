@@ -51,3 +51,4 @@ Map.addLayer(styled, {"opacity": 0.2}, "Selected municipios styled")
 Map
 
 # %%
+ 
