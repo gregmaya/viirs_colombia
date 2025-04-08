@@ -11,14 +11,14 @@ print(f"Loaded : {len(df)} municipios to select")
 
 gdf = gpd.read_file("../data/mpio_politico2018_dane/MGN_MPIO_POLITICO.shp")
 print(f"Loaded : {len(gdf)} rows fro municipios in Colombia. CRS : {gdf.crs}")
-#gdf = gpd.read_file("../data/mpio_politico2023_dane/MGN_URB_ZONA_URBANA.shp")
-#print(f"Loaded : {len(gdf)} zonas urbanas en Colombia. CRS : {gdf.crs}")
+# gdf = gpd.read_file("../data/mpio_politico2023_dane/MGN_URB_ZONA_URBANA.shp")
+# print(f"Loaded : {len(gdf)} zonas urbanas en Colombia. CRS : {gdf.crs}")
 
 gdf.plot()
 # %%
 # lowercase columnd
 gdf.columns = gdf.columns.str.lower()
-# Identify unique ID column 
+# Identify unique ID column
 uid = "mpio_ccnct"
 
 # Ensure the uid column is of type int
@@ -43,20 +43,21 @@ gdf.plot(column="selected_mun", legend=True)
 gdf = gdf.to_crs("EPSG:21818")
 print("Reprojected to EPSG:21818")
 
-#simplyfy geometries retaining topology with tolerance 10m
-gdf['geometry'] = gdf.simplify(tolerance=10, preserve_topology=True)
+# simplyfy geometries retaining topology with tolerance 10m
+gdf["geometry"] = gdf.simplify(tolerance=10, preserve_topology=True)
 
 # checking for valid geometries
 if gdf.is_valid.all():
     print("All geometries are valid")
 else:
-    print("Some geometries are invalid") 
+    print("Some geometries are invalid")
 
 # %%
 gdf = gdf.to_crs("EPSG:4326")
 print("Reprojected to EPSG:4326")
 
-# export geojson in crs 4326 for Google Earth engine
-filepath = "../data/gee_assets/municipios_mgn2018_selected.geojson"
-gdf.to_file(filepath, driver="GeoJSON")
+# export shapefile in crs 4326 for Google Earth engine
+filepath = "../data/gee_assets/municipios_mgn2018_selected.shp"
+gdf.to_file(filepath, driver="ESRI Shapefile")
+print(f"Exported to {filepath}")
 # %%
