@@ -1,5 +1,9 @@
 .DS_Store
+# Ignore all content inside data/
 data/*
-!data/outputs/
+
+# But do not ignore these two directories (and their content)
 !data/inputs/
+!data/outputs/
+
 earthengineapikey.json
