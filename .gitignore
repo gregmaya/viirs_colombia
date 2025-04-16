@@ -1,4 +1,5 @@
 .DS_Store
-data/mpio_politico2018_dane
-data/mpio_politico2023_dane
+data/*
+!data/outputs/
+!data/inputs/
 earthengineapikey.json
