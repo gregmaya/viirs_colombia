@@ -1,7 +1,16 @@
 # Night-time reflectance in Colombia
-![Night-time Reflectance 2023](img/readme_photo.png)
 
-This repository contains the code and data used for the analysis of night-time reflectance in Colombia. The analysis was performed using [Google Earth Engine](https://earthengine.google.com/) (GEE) and Python. In order to reproduce the results, you will need to have access to a Google Earth Engine service account and your own API key. See the [prerequisites](#prerequisites).
+<table border="0">
+  <tr>
+    <td>
+      <img src="img/readme_photo.png" alt="Night-time Reflectance 2023" width="300"/>
+    </td>
+    <td style="padding-left:20px;">
+      <p>This repository contains the code and data used for the analysis of night-time reflectance in Colombia. The analysis was performed using <a href="https://earthengine.google.com/">Google Earth Engine</a> (GEE) and Python.</p>
+      <p>In order to reproduce the results, you will need to have access to a Google Earth Engine service account and your own API key. See the <a href="#prerequisites">prerequisites</a>.</p>
+    </td>
+  </tr>
+</table>
 
 The repository is structured as follows:
 
