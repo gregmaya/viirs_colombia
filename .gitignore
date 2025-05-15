@@ -5,5 +5,7 @@ data/*
 # But do not ignore these two directories (and their content)
 !data/inputs/
 !data/outputs/
+data/outputs/raw/
+
 
 earthengineapikey.json

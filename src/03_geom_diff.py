@@ -1,5 +1,5 @@
 """
-creating a geometry og the difference between the municipio and the cabecera
+creating a geometry of the difference between the municipio and the cabecera
 """
 
 import geopandas as gpd

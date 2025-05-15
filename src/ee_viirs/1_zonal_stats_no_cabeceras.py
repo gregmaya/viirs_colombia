@@ -1,10 +1,19 @@
 # %%
+import os
+
 import ee
 import geemap
 
 # %%
-service_account = "pythoneeapi@small-towns-col.iam.gserviceaccount.com"
+# Get credentials from environment variables
+service_account = os.environ.get("EE_SERVICE_ACCOUNT")
 key_file = "../../earthengineapikey.json"
+
+# Check if the environment variables are set
+if not service_account or not key_file:
+    raise ValueError(
+        "EE_SERVICE_ACCOUNT and key_file(.json) environment variables must be set."
+    )
 
 # Authenticate and initialize the Earth Engine API
 credentials = ee.ServiceAccountCredentials(service_account, key_file)
@@ -81,4 +90,5 @@ print(mun_stats_df.head())
 export_path = "../../data/outputs/mun_nocabeceras_stats_raw_2.csv"
 mun_stats_df.to_csv(export_path, index=False)
 print(f"Exported zonal stats to {export_path}")
+# %%
 # %%

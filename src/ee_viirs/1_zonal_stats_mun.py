@@ -1,10 +1,19 @@
 # %%
+import os
+
 import ee
 import geemap
 
 # %%
-service_account = "pythoneeapi@small-towns-col.iam.gserviceaccount.com"
+# Get credentials from environment variables
+service_account = os.environ.get("EE_SERVICE_ACCOUNT")
 key_file = "../../earthengineapikey.json"
+
+# Check if the environment variables are set
+if not service_account or not key_file:
+    raise ValueError(
+        "EE_SERVICE_ACCOUNT and key_file(.json) environment variables must be set."
+    )
 
 # Authenticate and initialize the Earth Engine API
 credentials = ee.ServiceAccountCredentials(service_account, key_file)
@@ -45,6 +54,7 @@ def extract_year(image):
     year = date.get("year")
     return image.set("year", year)
 
+
 # Map the function over both datasets
 dataset1_with_year = dataset1.map(extract_year)
 dataset2_with_year = dataset2.map(extract_year)
@@ -61,23 +71,24 @@ print("Years of resulting images:", years)
 
 # %% --zonal statistics __
 def zonal_stats_per_image(img):
-    date_str = img.date().format('YYYYMMdd')
+    date_str = img.date().format("YYYYMMdd")
     stats = img.reduceRegions(
         collection=selected_mpios,
         reducer=ee.Reducer.mean()
-                    .combine(ee.Reducer.min(), sharedInputs=True)
-                    .combine(ee.Reducer.max(), sharedInputs=True)
-                    .combine(ee.Reducer.stdDev(), sharedInputs=True),
-        scale=480
+        .combine(ee.Reducer.min(), sharedInputs=True)
+        .combine(ee.Reducer.max(), sharedInputs=True)
+        .combine(ee.Reducer.stdDev(), sharedInputs=True),
+        scale=480,
     )
     # Add image date as a property to all features
-    stats = stats.map(lambda f: f.set('image_date', date_str))
+    stats = stats.map(lambda f: f.set("image_date", date_str))
     return stats
+
 
 # Apply to every image and flatten
 stats_collection = merged_dataset.map(zonal_stats_per_image).flatten()
 
-# %% 
+# %%
 mun_stats_df = geemap.ee_to_df(stats_collection)
 print(mun_stats_df.head())
 
@@ -86,4 +97,5 @@ print(mun_stats_df.head())
 export_path = "../../data/outputs/mun_stats_raw_2.csv"
 mun_stats_df.to_csv(export_path, index=False)
 print(f"Exported zonal stats to {export_path}")
+# %%
 # %%
