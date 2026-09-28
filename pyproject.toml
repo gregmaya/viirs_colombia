@@ -1,0 +1,17 @@
+[project]
+name = "viirs-colombia"
+version = "0.1.0"
+description = "Night-time lights (VIIRS) analysis for selected Colombian municipios"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.2",
+    "numpy>=2.0",
+    "matplotlib>=3.9",
+    "geopandas>=1.0",
+    "earthengine-api>=1.5",
+    "geemap>=0.35",
+    "jupyter>=1.1",
+    "ipykernel>=6.29",
+    "nbconvert>=7.16",
+    "pyarrow>=19",
+]
