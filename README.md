@@ -125,7 +125,12 @@ After the calibration change, the unmasked background of unlit land stays **abov
 
 ### 4. The −1.5 placeholder
 
-EOG uses **−1.5** as a placeholder value for grid cells without valid cloud-free data. GEE does not mask it, so it is included in the zonal statistics as if it were a radiance. It appears as the `average_min` of up to 120 municipalities in a year (2021 is the worst year), and occasionally in the masked bands. The effect on polygon means is small, but minimum values of exactly −1.5 should be read as "no data".
+EOG uses **−1.5** as a placeholder for grid cells where no annual median could be computed. It is a flag, not a measurement: over Colombia, no pixel has a value below −1.5 or between −1.5 and −1.0. In these cells the `average` and `median` bands both hold −1.5. When the flag appears depends on the version (see the readmes in `viirs_docs/`):
+
+- **V2.1 (2016–2021)**: the median skips any month with fewer than 3 cloud-free observations. A cell in a persistently cloudy area can have up to about 23 cloud-free observations in the year, spread as 1–2 per month, and still end up with no valid month.
+- **V2.2 (2022–2024)**: only cells with no cloud-free observation at all in the year are flagged.
+
+These cells are rare: between 14 and about 4,100 of Colombia's 5.3 million pixels per year, except about 44,600 (0.8 %) in 2021, the cloudiest year. GEE does not mask the flag, so it enters the zonal statistics as if it were a radiance. A single flagged pixel is enough to make a polygon's `average_min` equal −1.5, which happens in up to 120 municipalities in a year. The effect on polygon **means** is small, but minimum values of exactly −1.5 should be read as "no data".
 
 ### 5. V2.1 vs V2.2
 
